@@ -1,14 +1,9 @@
-﻿using HeroeSearchWeb.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System;
 using System.Threading.Tasks;
 using HeroeSearchWeb.Data.Interfaces;
 using HeroeSearchWeb.Data.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace HeroeSearchWeb.Controllers
@@ -16,16 +11,18 @@ namespace HeroeSearchWeb.Controllers
     public class HomeController : Controller
     {
         private readonly ISearchRepository _search;
+        private readonly IMemoryCache _memoryCache;
 
-        public HomeController(ISearchRepository SearchRepository)
+        public HomeController(ISearchRepository SearchRepository, IMemoryCache memoryCache)
         {
             _search = SearchRepository;
+            _memoryCache = memoryCache;
         }
+
         [HttpGet]
         public IActionResult Home()
         {
             return View();
-
         }
 
         public IActionResult Index(string searchString)
@@ -36,11 +33,23 @@ namespace HeroeSearchWeb.Controllers
             ViewData["searchString"] = searchString;
 
             HttpContext.Session.SetString("searchString", cacheKey);
-            Task<ResponseSearch> Heroes;
-            Heroes = _search.Heroes(searchString);
+
+            if (!_memoryCache.TryGetValue(cacheKey, out Task<ResponseSearch> Heroes))
+            {
+                Heroes = _search.Heroes(searchString);
+
+                var cacheExpirationsOptions =
+                    new MemoryCacheEntryOptions
+                    {
+                        AbsoluteExpiration = DateTime.Now.AddHours(1),
+                        Priority = CacheItemPriority.Normal,
+                        SlidingExpiration = TimeSpan.FromMinutes(10)
+                    };
+
+                _memoryCache.Set(cacheKey, Heroes, cacheExpirationsOptions);
+            }
+
             return View(Heroes);
         }
-
-     
     }
 }
