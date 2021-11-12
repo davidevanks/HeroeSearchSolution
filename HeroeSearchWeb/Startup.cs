@@ -8,6 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HeroeSearchWeb.Data.Interfaces;
+using HeroeSearchWeb.Data.Repositories;
+using Microsoft.AspNetCore.Http;
 
 namespace HeroeSearchWeb
 {
@@ -24,6 +27,21 @@ namespace HeroeSearchWeb
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            //Se registran los servicios a consumir en los controladores. Su referencia viene de la carpeta DATA
+            services.AddTransient<ISearchRepository, SearchRepository>();
+            services.AddTransient<IDetailsRepository, DetailsHeroeRepository>();
+            //Se establece la duración de la sesión  
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(10);
+            });
+            services.AddMvc();
+            services.AddControllers();
+            services.AddRazorPages().AddRazorRuntimeCompilation();
+
+            //Se registro para usar sesiones
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            //Se registro servicio para implementar cache system en netcore
+            services.AddMemoryCache();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,9 +53,10 @@ namespace HeroeSearchWeb
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                //Configuración realizada para centralizar los errores y mostrar pagina not found. 
+                //La otra parte de la lógica implementada esta en el ErrorController y se cambio 
+                app.UseStatusCodePagesWithRedirects("/Error/{0}");
+
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -45,13 +64,22 @@ namespace HeroeSearchWeb
             app.UseRouting();
 
             app.UseAuthorization();
+            //Se registro para usar sesiones en los controladores
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    name: "dfault",
+                    pattern: "{controller=Home}/{action=Home}/{id?}"
+
+
+
+                );
+
+
             });
+
         }
     }
 }

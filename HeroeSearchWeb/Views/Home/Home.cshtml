@@ -1,0 +1,26 @@
+﻿@{ ViewData["Title"] = "Home Page"; }
+<link href="~/lib/bootstrap/dist/css/custom.css" rel="stylesheet" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<div class="row">
+    <div class="col text-center">
+        <br />
+        <div class="alert  alert-success tituloMarvel" role="alert">
+            <h3>LOOK FOR YOUR FAVORITE SUPER HERO OR VILLIAN</h3>
+        </div>
+        <form class="navbar-form navbar-right" asp-controller="Home" asp-action="Index" method="get">
+            <div class="form-group">
+                <input type="text" required class="form-control" placeholder="Enter a Name of a SuperHero or Villian" name="searchString" value="@ViewData["searchString"]">
+
+            </div>
+
+            <input type="submit" asp-controller="Home" asp-action="Index" value="SEARCH" class="btn btn-primary " />
+        </form>
+
+    </div>
+
+</div>
+<br />
+
+<div class="row">
+    <img src="~/image/superhero.jpg" class="img-fluid" alt="Responsive image">
+</div>

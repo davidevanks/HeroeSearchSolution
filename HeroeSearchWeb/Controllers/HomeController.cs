@@ -6,32 +6,41 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using HeroeSearchWeb.Data.Interfaces;
+using HeroeSearchWeb.Data.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace HeroeSearchWeb.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ISearchRepository _search;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ISearchRepository SearchRepository)
         {
-            _logger = logger;
+            _search = SearchRepository;
         }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
+        [HttpGet]
+        public IActionResult Home()
         {
             return View();
+
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult Index(string searchString)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var cacheKey = "";
+            searchString = searchString == null ? cacheKey = "" : cacheKey = searchString;
+
+            ViewData["searchString"] = searchString;
+
+            HttpContext.Session.SetString("searchString", cacheKey);
+            Task<ResponseSearch> Heroes;
+            Heroes = _search.Heroes(searchString);
+            return View(Heroes);
         }
+
+     
     }
 }

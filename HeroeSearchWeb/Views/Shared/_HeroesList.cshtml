@@ -1,0 +1,20 @@
+﻿@model HeroeSearchWeb.Data.Models.Heroe
+
+@{
+}
+
+
+
+
+
+<div class="card" style="width: 200px; ">
+    <img class="card-img-top" height="190" width="50" src="@Model.Image.Url" alt="Card image cap">
+    <div class="card-body">
+        <h5 class="card-title">Name: @Model.Name</h5>
+        <p class="card-text">Gender: @Model.Appearance.Gender</p>
+        @*<a asp-controller="Heroe" asp-route-id="@Model.Id" asp-action="Details" class="btn btn-primary">See Details</a>*@
+        <a asp-controller="Heroe" asp-route-id="@Model.Id" asp-action="Details" class="btn btn-primary">See Details</a>
+
+    </div>
+</div>
+<br />

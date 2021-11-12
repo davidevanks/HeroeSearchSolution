@@ -1,8 +1,75 @@
-﻿@{
+﻿@model Task<HeroeSearchWeb.Data.Models.ResponseSearch>
+
+@{
     ViewData["Title"] = "Home Page";
 }
+<link href="~/lib/bootstrap/dist/css/custom.css" rel="stylesheet" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<div class="row">
+    <div class="col text-center">
+        <br />
+        <div class="alert  alert-success tituloMarvel" role="alert">
+            <h3>LOOK FOR YOUR FAVORITE SUPER HERO OR VILLIAN</h3>
+        </div>
+        <form class="navbar-form navbar-right" asp-controller="Home" asp-action="Index" method="get">
+            <div class="form-group">
+                <input type="text"   required class="form-control" placeholder="Enter a Name of a SuperHero or Villian" name="searchString" value="@ViewData["searchString"]">
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+            </div>
+
+            <input type="submit" asp-controller="Home" asp-action="Index" value="SEARCH" class="btn btn-primary " />
+        </form>
+
+    </div>
+
+</div>
+<br />
+
+<div class="row">
+
+
+
+
+    @if (Model.Result.ValueSearch != null && Model.Result.ValueSearch != "")
+    {
+
+        @if (Model.Result.MessageResponse == "success")
+        {
+            @foreach (var Heroe in Model.Result.ListHeroes)
+            {
+                <div class="col-sm-3 d-flex justify-content-center justify-content-md-start">
+                    <partial name="_HeroesList" model="Heroe" />
+
+                </div>
+
+
+            }
+        }
+        else if (Model.Result.MessageResponse == "error")
+        {
+            <div class="col text-center">
+                <div class="alert alert-danger" role="alert">
+                    @Model.Result.MessageError
+                </div>
+            </div>
+
+        }
+
+
+    }
+    else
+    {
+
+
+        <div class="col text-center">
+            <div class="alert alert-danger" role="alert">
+                Please enter a valid name for hero villian and try again.
+            </div>
+        </div>
+
+
+    }
+
+
+
 </div>
