@@ -24,6 +24,12 @@ namespace HeroeSearchWeb.Controllers
             Task<Heroe> Response;
             Response = _Details.HeroesDetails(id);
             Response.Result.ValueSearch = HttpContext.Session.GetString("searchString");
+            if (Response.Result.Id == null)
+            {
+                ViewBag.ErrorMessage = "Sorry, the resource you requested could not be found!";
+                ViewBag.ErrorHeader = "HERO O VILLIAN NOT FOUND";
+                return View("_NotFound");
+            }
             return View(Response);
         }
     }

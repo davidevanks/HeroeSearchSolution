@@ -1,0 +1,22 @@
+﻿<link href="~/css/NotFound.css" rel="stylesheet" />
+
+<div class="col-md-12 NotFound">
+    <div class="error-template NotFoundFont">
+        <h1>
+            Oops Capitán!
+        </h1>
+        <h2>
+            @ViewBag.ErrorHeader
+        </h2>
+        <div class="error-details">
+            @ViewBag.ErrorMessage
+        </div>
+        <div class="error-actions">
+            <a asp-controller="Home" asp-action="Home" class="btn btn-primary btn-lg">
+                <span class="glyphicon glyphicon-home"></span>
+                Take Me Home
+            </a>
+          
+        </div>
+    </div>
+</div>
