@@ -1,0 +1,294 @@
+﻿@model Task<HeroeSearchWeb.Data.Models.Heroe>
+@{ ViewData["Title"] = "Details"; }
+
+
+<link href="~/lib/bootstrap/dist/css/custom.css" rel="stylesheet" />
+<link href="~/lib/bootstrap/dist/css/Profile.css" rel="stylesheet" />
+<div class="row">
+    <div class="col text-center">
+        <br />
+        <div class="alert alert-success tituloMarvel" role="alert">
+            <h3>LOOK FOR YOUR FAVORITE SUPER HERO OR VILLIAN</h3>
+        </div>
+        <form class="navbar-form navbar-right" asp-controller="Home" asp-action="Index" asp-route-searchString="@Model.Result.ValueSearch" method="get">
+            <div class="form-group">
+                <input type="text" required class="form-control" placeholder="Enter a Name of a SuperHero or Villian" name="searchString" value="@Model.Result.ValueSearch">
+
+            </div>
+            
+            <input type="submit" asp-controller="Home" asp-action="Index" asp-route-searchString="@Model.Result.ValueSearch" value="COME BACK" class="btn btn-danger " />
+        </form>
+
+    </div>
+
+</div>
+<br />
+<div class="container emp-profile">
+    @*<form method="post">*@
+    <div class="row">
+        <div class="col-md-4">
+            <div class="profile-img">
+                <img src="@Model.Result.Image.Url" alt="" />
+
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="profile-head">
+                <h5>
+                    @Model.Result.Name
+                </h5>
+
+
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="BIOGRAPHY-tab" data-toggle="tab" href="#BIOGRAPHY" role="tab" aria-controls="BIOGRAPHY" aria-selected="true">BIOGRAPHY</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="powerstats-tab" data-toggle="tab" href="#powerstats" role="tab" aria-controls="powerstats" aria-selected="false">POWER STATS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="appearance-tab" data-toggle="tab" href="#appearance" role="tab" aria-controls="appearance" aria-selected="false">APPAREANCE</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="work-tab" data-toggle="tab" href="#work" role="tab" aria-controls="work" aria-selected="false">WORK</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="connections-tab" data-toggle="tab" href="#connections" role="tab" aria-controls="connections" aria-selected="false">CONNECTIONS</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="row">
+
+                <div class="col-md-8">
+                    <div class="tab-content profile-tab" id="myTabContent">
+                        <div class="tab-pane fade show active" id="BIOGRAPHY" role="tabpanel" aria-labelledby="BIOGRAPHY-tab">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Full Name:</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>@Model.Result.Biography.FullName </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Alter Ego:</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>@Model.Result.Biography.AlterEgo</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Aliases:</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>
+                                        @{ string alias = string.Join(", ", Model.Result.Biography.Aliases);
+                                @alias }
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Place of birth:</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>@Model.Result.Biography.PlaceOfBirth</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>First Appearance:</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>@Model.Result.Biography.firstappearance</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Publisher:</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>@Model.Result.Biography.Publisher</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Alignment:</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>@Model.Result.Biography.Alignment</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="powerstats" role="tabpanel" aria-labelledby="powerstats-tab">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Intelligence</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>@Model.Result.Powerstats.Intelligence </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Strength</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>@Model.Result.Powerstats.Strength</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Speed</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>@Model.Result.Powerstats.Speed</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Durability</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>@Model.Result.Powerstats.Durability</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Power</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>@Model.Result.Powerstats.Power</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Combat</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>@Model.Result.Powerstats.Combat</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="appearance" role="tabpanel" aria-labelledby="appearance-tab">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Gender</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>@Model.Result.Appearance.Gender</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Race</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>@Model.Result.Appearance.Race</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Height</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>
+
+                                        @{ string heigth = string.Join(", ", Model.Result.Appearance.Height);
+                                @heigth }
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Weight</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>
+                                        @{ string weight = string.Join(", ", Model.Result.Appearance.Weight);
+                                @weight }
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Eye Color</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>@Model.Result.Appearance.EyeColor</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Hair Color</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>@Model.Result.Appearance.HairColor</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="tab-pane fade " id="work" role="tabpanel" aria-labelledby="work-tab">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Occupation</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>@Model.Result.Work.Occupation</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Base</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>@Model.Result.Work.Base</p>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="tab-pane fade " id="connections" role="tabpanel" aria-labelledby="connections-tab">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Group Affiliation</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>@Model.Result.Connections.GroupAffiliation</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Relatives</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>@Model.Result.Connections.Relatives</p>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+
+        </div>
+        <div class="col-md-2">
+
+
+        </div>
+    </div>
+    @*</form>*@
+</div>
+
