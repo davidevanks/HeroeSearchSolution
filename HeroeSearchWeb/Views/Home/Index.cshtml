@@ -13,23 +13,16 @@
         </div>
         <form class="navbar-form navbar-right" asp-controller="Home" asp-action="Index" method="get">
             <div class="form-group">
-                <input type="text"   required class="form-control" placeholder="Enter a Name of a SuperHero or Villian" name="searchString" value="@ViewData["searchString"]">
-
+                <input type="text" required class="form-control" placeholder="Enter a Name of a SuperHero or Villian" name="searchString" value="@ViewData["searchString"]">
             </div>
-
             <input type="submit" asp-controller="Home" asp-action="Index" value="SEARCH" class="btn btn-primary " />
         </form>
-
     </div>
 
 </div>
 <br />
 
 <div class="row">
-
-
-
-
     @if (Model.Result.ValueSearch != null && Model.Result.ValueSearch != "")
     {
 
@@ -39,10 +32,7 @@
             {
                 <div class="col-sm-3 d-flex justify-content-center justify-content-md-start">
                     <partial name="_HeroesList" model="Heroe" />
-
                 </div>
-
-
             }
         }
         else if (Model.Result.MessageResponse == "error")
@@ -54,22 +44,13 @@
             </div>
 
         }
-
-
     }
     else
     {
-
-
         <div class="col text-center">
             <div class="alert alert-danger" role="alert">
                 Please enter a valid name for hero villian and try again.
             </div>
         </div>
-
-
     }
-
-
-
 </div>

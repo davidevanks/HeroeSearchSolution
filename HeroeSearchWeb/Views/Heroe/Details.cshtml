@@ -1,7 +1,6 @@
 ﻿@model Task<HeroeSearchWeb.Data.Models.Heroe>
 @{ ViewData["Title"] = "Details"; }
 
-
 <link href="~/lib/bootstrap/dist/css/custom.css" rel="stylesheet" />
 <link href="~/lib/bootstrap/dist/css/Profile.css" rel="stylesheet" />
 <div class="row">
@@ -15,16 +14,14 @@
                 <input type="text" required class="form-control" placeholder="Enter a Name of a SuperHero or Villian" name="searchString" value="@Model.Result.ValueSearch">
 
             </div>
-            
+
             <input type="submit" asp-controller="Home" asp-action="Index" asp-route-searchString="@Model.Result.ValueSearch" value="COME BACK" class="btn btn-danger " />
         </form>
-
     </div>
-
 </div>
 <br />
 <div class="container emp-profile">
-    @*<form method="post">*@
+  
     <div class="row">
         <div class="col-md-4">
             <div class="profile-img">
@@ -37,8 +34,6 @@
                 <h5>
                     @Model.Result.Name
                 </h5>
-
-
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="BIOGRAPHY-tab" data-toggle="tab" href="#BIOGRAPHY" role="tab" aria-controls="BIOGRAPHY" aria-selected="true">BIOGRAPHY</a>
@@ -278,17 +273,12 @@
 
                     </div>
                 </div>
-
-
-
             </div>
 
         </div>
         <div class="col-md-2">
-
-
         </div>
     </div>
-    @*</form>*@
+ 
 </div>
 
